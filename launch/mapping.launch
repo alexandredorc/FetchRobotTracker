@@ -1,0 +1,12 @@
+<launch>
+    <include file="$(find tracker_robot)/launch/world.launch"/>
+
+    <include file="$(find fetch_navigation)/launch/build_map.launch"/>
+
+    <node pkg="rviz" name="rviz" type="rviz"/>
+
+<!-- TELEOP KEYBOARD -->
+    <node pkg="teleop_twist_keyboard" name="teleop_twist_keyboard" type="teleop_twist_keyboard.py" output="screen"/>
+
+   
+</launch>

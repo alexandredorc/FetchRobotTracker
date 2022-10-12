@@ -1,0 +1,18 @@
+<launch>
+
+
+
+    <arg name="map_path" value="$(env HOME)/catkin_ws/src/tracker_robot/maps/fetch_map.yaml"/>
+
+    <include file="$(find fetch_navigation)/launch/fetch_nav.launch" >
+        <arg name="map_file" value="$(arg map_path)" />
+    </include>
+
+    <include file="$(find tracker_robot)/launch/world.launch"/>
+
+    
+
+    
+
+
+</launch>
