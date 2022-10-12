@@ -10,3 +10,15 @@ on in the simulator (and the real robot).
 Target: The Fetch robot follows the guider in front (maintaining a certain distance) in the office and 
 corridor  environment.  The  project  will  be  first  done  using  a  Fetch  simulator;  once  the  simulator  
 works well, the real robot can be used if it is allowed to access the lab. 
+
+
+## How to install
+
+autoriser les telechargement apt :
+      echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" | sudo tee /etc/apt/sources.list.d/ros-latest.list 
+update apt
+      sudo apt update
+
+changer le nom du package en tracker_robot
+
+mettre le model dans la le dossier .gazebo/models
