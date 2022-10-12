@@ -14,10 +14,19 @@ works well, the real robot can be used if it is allowed to access the lab.
 
 ## How to install
 
+Simulateur en ligne de ros
+https://app.theconstructsim.com/Desktop 
+
+
 autoriser les telechargement apt :
       echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" | sudo tee /etc/apt/sources.list.d/ros-latest.list 
 update apt
       sudo apt update
+      
+installer les packet necessaires
+sudo apt install ros-melodic-fetch-calibration ros-melodic-fetch-open-auto-dock \
+ros-melodic-fetch-navigation ros-melodic-fetch-tools -y
+sudo apt install ros-melodic-fetch-gazebo
 
 changer le nom du package en tracker_robot
 
