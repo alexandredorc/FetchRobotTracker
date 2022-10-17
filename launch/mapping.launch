@@ -1,8 +1,11 @@
 <launch>
+<!-- spawn the gazebo world -->
     <include file="$(find tracker_robot)/launch/world.launch"/>
 
+<!-- execute launch file for mapping -->
     <include file="$(find fetch_navigation)/launch/build_map.launch"/>
 
+<!-- execute rviz for mapping -->
     <node pkg="rviz" name="rviz" type="rviz"/>
 
 <!-- TELEOP KEYBOARD -->

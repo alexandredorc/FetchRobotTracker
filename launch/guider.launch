@@ -1,0 +1,28 @@
+<launch>
+    <!-- set argument map_file as fetch_map -->
+    <arg name="map_file" default="$(env HOME)/catkin_ws/src/tracker_robot/maps/fetch_map.yaml"/>
+    <!-- publish the map -->
+    <node name="map_server_guider" pkg="map_server" type="map_server" args="$(arg map_file)">
+       <param name="frame_id" value="guider/map" />
+    </node>
+
+    <!-- get the turtlebot burger description -->
+    <param name="robot_description" command="$(find xacro)/xacro --inorder $(find turtlebot3_description)/urdf/turtlebot3_burger.urdf.xacro" />
+
+    <!-- spawn the turtlebot burger model in gazebo -->
+    <node pkg="gazebo_ros" type="spawn_model" name="spawn_model"  args="-x 2 -y 0 -z 0 -urdf -param robot_description -model guider" respawn="false" output="screen"/>
+
+    <!-- setup localisation of turtlebot with amcl -->
+    <include file="$(find tracker_robot)/launch/guider_amcl.launch"/>
+
+<!--
+    <include file="$(find tracker_robot)/launch/guider_move_base.launch"/>
+-->
+   <!-- initialize the turtlebot burger -->
+    <include file="$(find turtlebot3_bringup)/launch/turtlebot3_remote.launch">
+        <arg name="model" value="burger"/>
+        <arg name="multi_robot_name" value="guider"/>
+    </include>
+
+
+</launch>

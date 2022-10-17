@@ -1,0 +1,4 @@
+<launch>
+    <env name="GAZEBO_MODEL_PATH" value="$(find fetch_gazebo)/models:$(optenv GAZEBO_MODEL_PATH)" />
+    <include file="$(find fetch_gazebo)/launch/include/fetch.launch.xml"/>
+</launch>
