@@ -28,6 +28,11 @@ sudo apt install ros-melodic-fetch-calibration ros-melodic-fetch-open-auto-dock 
 ros-melodic-fetch-navigation ros-melodic-fetch-tools -y
 sudo apt install ros-melodic-fetch-gazebo
 
-changer le nom du package en tracker_robot
+faire "catkin build"
 
-mettre le model dans la le dossier .gazebo/models
+pour tester si le projet fonctionne:
+
+roslaunch tracker_robot mapping.launch
+roslaunch tracker_robot nav.launch
+
+
