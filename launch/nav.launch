@@ -12,36 +12,12 @@
         </include>
     </group>
 
-    <!--
-    <arg name="cmd_vel_topic" default="/cmd_vel"/>
-    <arg name="move_forward_only" default="false"/>
-
-    <include file="$(find tracker_robot)/launch/guider_move_base.launch">
-        <arg name="move_forward_only" value="$(arg move_forward_only)"/>
-        <arg name="cmd_vel_topic" value="$(arg cmd_vel_topic)"/>
-    </include>
-    -->
-
-    <!--  -->
+    <!-- execute launch file for fetch robot  -->
     <include file="$(find tracker_robot)/launch/tracker.launch"/>     
     
-    <!--  -->
+    <!-- execute HSV_detec.py for computer vision and fetch robot navigation -->
     <node pkg="tracker_robot" name="HSV_detec" type="HSV_detec.py" output="screen"/> 
     
-    <!--  -->
-    <node name="map_serve" pkg="map_server" type="map_server" args="$(arg map_file)">
-       <param name="frame_id" value="map" />
-    </node>
-
-    <!--  -->
+    <!-- set tranformation for map to guider/map to be equivalent -->
     <node pkg="tf" name="map_to_map" type="static_transform_publisher" args="0 0 0 0 0 0 /map /guider/map 100"/>
-
-    <!--  -->
-    <arg name="map_path" default="$(env HOME)/catkin_ws/src/tracker_robot/maps/fetch_map.yaml"/>
-    <!--  -->
-    <include file="$(find fetch_navigation)/launch/fetch_nav.launch" >
-        <arg name="map_file" value="$(arg map_path)" />
-    </include>
-
-
 </launch>

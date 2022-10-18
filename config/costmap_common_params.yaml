@@ -8,5 +8,5 @@ inflation_radius: 1.0
 cost_scaling_factor: 3.0
 
 map_type: costmap
-observation_sources: scan
+observation_sources: guider/scan
 scan: {sensor_frame: guider/base_scan, data_type: LaserScan, topic: /guider/scan, marking: true, clearing: true}
