@@ -1,13 +1,13 @@
 <launch>
-<!-- spawn the gazebo world -->
+    <!-- spawn the gazebo world -->
     <include file="$(find tracker_robot)/launch/world.launch"/>
 
-<!-- execute launch file for mapping -->
+    <!-- execute launch file for mapping -->
     <include file="$(find fetch_navigation)/launch/build_map.launch"/>
 
-<!-- execute rviz for mapping -->
-    <node pkg="rviz" name="rviz" type="rviz"/>
+    <!-- display rviz of the navigation data -->
+    <node type="rviz" name="rviz" pkg="rviz" args="-d $(find package_name)/rviz/config_mapping.rviz" />
 
-<!-- TELEOP KEYBOARD -->
+    <!-- TELEOP KEYBOARD for mapping-->
     <node pkg="teleop_twist_keyboard" name="teleop_twist_keyboard" type="teleop_twist_keyboard.py" output="screen"/>
 </launch>
