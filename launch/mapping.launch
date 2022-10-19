@@ -2,11 +2,15 @@
     <!-- spawn the gazebo world -->
     <include file="$(find tracker_robot)/launch/world.launch"/>
 
+    <!-- spawn the fetch robot in gazebo -->
+    <env name="GAZEBO_MODEL_PATH" value="$(find fetch_gazebo)/models:$(optenv GAZEBO_MODEL_PATH)" />
+    <include file="$(find fetch_gazebo)/launch/include/fetch.launch.xml"/>
+
     <!-- execute launch file for mapping -->
     <include file="$(find fetch_navigation)/launch/build_map.launch"/>
 
     <!-- display rviz of the navigation data -->
-    <node type="rviz" name="rviz" pkg="rviz" args="-d $(find package_name)/rviz/config_mapping.rviz" />
+    <node type="rviz" name="rviz" pkg="rviz" args="-d $(find tracker_robot)/rviz/config_mapping.rviz" />
 
     <!-- TELEOP KEYBOARD for mapping-->
     <node pkg="teleop_twist_keyboard" name="teleop_twist_keyboard" type="teleop_twist_keyboard.py" output="screen"/>

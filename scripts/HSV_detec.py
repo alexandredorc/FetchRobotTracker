@@ -107,48 +107,55 @@ class Tracking:
         self.mask=cv2.dilate(self.mask, None, iterations=2)
         elements=cv2.findContours(self.mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)[-2]
 
+        # Choose the smallest element in the image
         size=999999
         final_ele=None
         for e in elements:
-            rec=cv2.boundingRect(e)
-            temp=rec[2]*rec[3]
+            rec=cv2.boundingRect(e)#find the rectangle that frames the element
+            temp=rec[2]*rec[3] #calculate the area of the frame rectangle
             if size>temp:
                 size=temp
                 final_ele=e
-            
+        # If an element is defined and a point cloud is defined
         if final_ele is not None and self.point_cloud is not None:
             rec=cv2.boundingRect(final_ele)
+            # get center coordinate of the element in the image
             x=int(rec[0]+(rec[2])/2)
-            y=int(rec[1]+(rec[3])/2)
-        
-            coord_robot=self.point_cloud[y/4,x/4]
-            if coord_robot[0]==float("nan"):
-                for i in range(16):
+            y=int(rec[1]+(rec[3])/2) 
+        # Remap coordinate in the point cloud
+            coord_robot=self.point_cloud[y/4,x/4] 
+
+            if coord_robot[0]==float("nan"): # If the coordinate exist in the point cloud 
+                for i in range(16): # We check neighbouring cases to find a replacement
                     if self.point_cloud[y/4+i%4,x/4+i//4][0]!=float("nan"):
                         coord_robot=self.point_cloud[y/4+i%4,x/4+i//4]
                         break
-            self.goal_set(coord_robot[0],coord_robot[2])
+            # Call the goal_set function with the x y coordinate of the guider from the tracker
+            self.goal_set(coord_robot[0],coord_robot[2]) 
+            # send the command to a behaviour funcion
             self.cmd_robot()
-        else:
+        else: # if the guider position is not defined we send a simple rotation to check if the guider is around
+
             self.msg_twist.linear.x=0
-            self.msg_twist.angular.z=np.sign(self.msg_twist.angular.z)*0.7
+            self.msg_twist.angular.z=np.sign(self.msg_twist.angular.z)*0.7 # we rotate in the way the guider was last
             self.cmd_pub.publish(self.msg_twist)
 
             
         
     
-        self.display_images()
+        self.display_images() 
 
-        self.rate.sleep()
-
+        self.rate.sleep() # the process hold for a given time
      
+    # subscriber to point cloud topic
     def get_cloud(self,data):
         self.point_cloud = ros_numpy.point_cloud2.pointcloud2_to_array(data)
     
+# Main function
 if __name__=="__main__":    
-    rospy.init_node('image_proc', anonymous=True)
+    rospy.init_node('tracking', anonymous=True) #init image_proc node
     
     tracker=Tracking()
 
-    tracker.rate=rospy.Rate(20) # spin() enter the program in a infinite loop
-    rospy.spin() 
+    tracker.rate=rospy.Rate(20)
+    rospy.spin()  # spin() enter the program in a infinite loop
