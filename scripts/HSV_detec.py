@@ -19,8 +19,8 @@ class Tracking:
         self.point_cloud=None
 
         # HSV space for image filter
-        self.lo_or=np.array([10,200,80])
-        self.hi_or=np.array([20, 255,255])
+        self.lo_or=np.array([15,200,80])
+        self.hi_or=np.array([25, 255,255])
         self.color_info=np.array([0, 165,255])
 
         # get the raw image from camera
