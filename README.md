@@ -1,38 +1,15 @@
 # FetchRobotTracker
-Fetch robot following a guider: Assesment 3 Mecatronic
+## Fetch robot following a guider: Assesment 3 Mecatronic
 
-Using  the  learnt  and  state-of-art  control  algorithm  to  control  the  Fetch  robot  to  follow  the  path  of  
-the  guider  in  front.  Both  depth  images  and  RGB  images  can  be  used  to  track  the  guider.  Special 
-designed artificial markers or patterns can be put on the back of the guider. 
-A  map  of  the  environment  needs  to  be  built  and  a  localisation  algorithm  is  also  required.  Open  
-source code are available for these two parts but the group needs to be able to make them working 
-on in the simulator (and the real robot).  
-Target: The Fetch robot follows the guider in front (maintaining a certain distance) in the office and 
-corridor  environment.  The  project  will  be  first  done  using  a  Fetch  simulator;  once  the  simulator  
-works well, the real robot can be used if it is allowed to access the lab. 
+The goal of our project is to control a Fetch robot, called tracker, to follow the path of the guider in front of him. We need to maintain a stable distance between the tracker robot and the guider robot. 
+
+This project uses ROS environment, Ubuntu OS on Linux, as well as basic computer vision.
+
+We also use several packages such as Gazebo, RViz, Fetch & Freight Robot package and TurtleBot3 package.
 
 
 ## How to install
 
-Simulateur en ligne de ros
-https://app.theconstructsim.com/Desktop 
-
-
-autoriser les telechargement apt :
-      echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" | sudo tee /etc/apt/sources.list.d/ros-latest.list 
-update apt
-      sudo apt update
-      
-installer les packet necessaires
-sudo apt install ros-melodic-fetch-calibration ros-melodic-fetch-open-auto-dock \
-ros-melodic-fetch-navigation ros-melodic-fetch-tools -y
-sudo apt install ros-melodic-fetch-gazebo
-
-faire "catkin build"
-
-pour tester si le projet fonctionne:
-
-roslaunch tracker_robot mapping.launch
-roslaunch tracker_robot nav.launch
-
-
+# ROS setup
+The first thing to do is setup the environment ROS in version Melodic follow the tutorial to install ROS
+Here is the link for installation on Ubuntu 18.04 ; this OS is the easiest to install ROS and is very stable.

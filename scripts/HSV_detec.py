@@ -32,30 +32,31 @@ class Tracking:
     
     #function for command creation from pointcloud data
     def goal_set(self ,goal_x ,goal_y):
-        #rospy.logwarn(str(goal_x)+" "+str(goal_y))
+        rospy.logwarn(str(goal_x)+" "+str(goal_y))
 
-        # Calculation distance between tracker and guider
-        d=math.sqrt(goal_x**2+goal_y**2)
+        # Calculation distance between tracker and guider the -1 take into account the height of the robot
+        d=goal_x**2+goal_y**2-1
+
         # Get angle between the robot angle and tracker to guider vector 
-        alpha=math.atan(goal_x/goal_y)
+        alpha=math.atan(goal_y/goal_x)
         # Calculate radius of the circle trajectory to goal
-        R=d/(2*math.sin(abs(alpha)))
+        R=d/(2*math.cos(abs(alpha)))
         # Fixed linear speed equivalent to turtlebot maximum speed
-        v=0.38
+        v=0.37
         # Calculate the angular speed
         w=np.sign(alpha)*v/R
 
         # Calculate time from the trajectory length
-        length=R*abs(alpha)
+        length=R*abs(math.pi-(2*alpha))
         # Critical distance between fetch and guider robot
-        cri_dist=0.6
-        # Calculate time of travel with acceleration of fetch robot and
-        self.time_limit_cmd= ((length-cri_dist-v**2)/v)+v
+        cri_dist=1
+        # Calculate time of travel minus the critical distance
+        self.time_limit_cmd= ((length-cri_dist)/v)
 
         # Define command twist for tracker 
         self.msg_twist.linear.x=v
         self.msg_twist.angular.z=-w
-        #rospy.loginfo(str(length)+" "+str(w)+" "+str(R)+" "+str(alpha))
+        rospy.loginfo(str(length)+" "+str(w)+" "+str(R)+" "+str(self.time_limit_cmd)+" "+str(math.pi-(2*alpha)))
 
     # Display info on camera output
     def display_info(self,rec,x,y):
@@ -78,15 +79,15 @@ class Tracking:
 
         # If this variable is positive then we set a time stamp at which the robot will stop to move
         if self.time_limit_cmd>0:
+            rospy.logerr(self.time_limit_cmd)
             self.time_cmd=self.time_limit_cmd+rospy.get_rostime().to_sec()
             self.time_limit_cmd=0
 
-        #rospy.logerr(self.time_cmd)
-        #rospy.logerr(rospy.get_rostime().to_sec())
+        rospy.logerr(self.time_cmd)
+        rospy.logerr(rospy.get_rostime().to_sec())
 
         # if the current time is lower than the time stamp set earlier we publish the command
         if self.time_cmd>rospy.get_rostime().to_sec():
-
             self.cmd_pub.publish(self.msg_twist)
         else: # else we tell the robot to stop
             stop_robot_cmd=Twist()
