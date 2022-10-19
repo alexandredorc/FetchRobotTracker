@@ -1,13 +1,11 @@
 #!/usr/bin/env python
-import sys, math, rospy
-from geometry_msgs.msg import Twist, PoseStamped
+import math, rospy
+from geometry_msgs.msg import Twist
 import cv2
 import numpy as np
 from cv_bridge import CvBridge
-from geometry_msgs.msg import PoseStamped, PoseWithCovarianceStamped, Twist
+from geometry_msgs.msg import Twist
 from sensor_msgs.msg import Image, PointCloud2
-import sensor_msgs.point_cloud2 as pc2
-import tf
 import ros_numpy
 
 class Tracking:
@@ -135,7 +133,7 @@ class Tracking:
             # send the command to a behaviour funcion
             self.cmd_robot()
 
-            self.display_info()
+            self.display_info(rec,x,y)
         else: # if the guider position is not defined we send a simple rotation to check if the guider is around
 
             self.msg_twist.linear.x=0
