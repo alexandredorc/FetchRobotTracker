@@ -134,6 +134,8 @@ class Tracking:
             self.goal_set(coord_robot[0],coord_robot[2]) 
             # send the command to a behaviour funcion
             self.cmd_robot()
+
+            self.display_info()
         else: # if the guider position is not defined we send a simple rotation to check if the guider is around
 
             self.msg_twist.linear.x=0
@@ -142,7 +144,6 @@ class Tracking:
 
             
         
-    
         self.display_images() 
 
         self.rate.sleep() # the process hold for a given time
