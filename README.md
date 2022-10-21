@@ -44,7 +44,9 @@ Don't forget to build the package into the catkin environment by doing the follo
 > cd ~/catkin_ws/src
 
 > catkin_make
+
 or 
+
 > catkin build
 
 ## Launching mapping
