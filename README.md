@@ -36,7 +36,16 @@ And install all the requirements by running the ``setup.sh``
 
 it should install all the requirements say accept all the [Y/n], if this file is not working try doing all the command inside the file line by line.
 
-After launching the nav.launch file if the turtlebot is not orange and the camera is not looking down thats means the 
+After launching the nav.launch file if the turtlebot is not orange and the camera is not looking down thats means the change in the file wasn't done properly, try to change them manualy doing the following changes:
+* change in file /opt/ros/melodic/share/fetch_description/robots/fetch.urdf; ligne 164; change <limit effort="0.68" lower="-0.76" upper="1.45" into <limit effort="0.68" lower="0.7" upper="1" .
+* change in file /opt/ros/melodic/share/turtlebot3_description/urdf/turtlebot3_burger.gazebo.xacro all the occurences of DarkGrey into Orange .
+
+Don't forget to build the package into the catkin environment by doing the following command: 
+> cd ~/catkin_ws/src
+
+> catkin_make
+or 
+> catkin build
 
 ## Launching mapping
 
